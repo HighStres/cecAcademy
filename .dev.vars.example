@@ -1,0 +1,3 @@
+# Apenas estrutura: substitua os valores localmente, nunca publique segredos.
+CECA_CONFIG='{"username":"","password":"","sessionSecret":"","spinRootFolderId":""}'
+GOOGLE_SERVICE_ACCOUNT_JSON='{}'
