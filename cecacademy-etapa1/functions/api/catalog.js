@@ -1,0 +1,2 @@
+import {result,sessionValid} from '../../lib/shared.js';import {getCatalog} from '../../lib/drive.js';
+export async function onRequestGet({request,env}){if(!await sessionValid(request,env))return result({error:'Sessão expirada. Entre novamente.'},401);try{return result(await getCatalog(env))}catch{return result({error:'Não foi possível carregar a biblioteca. Verifique a configuração do Google Drive.'},503)}}

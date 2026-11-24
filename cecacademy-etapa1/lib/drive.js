@@ -1,0 +1,20 @@
+const FOLDER='application/vnd.google-apps.folder';
+const labels={'Boas vindas':'Boas-vindas','Captação':'Captação','convenios e parcerias':'Convênios e Parcerias','fidelização':'Fidelização','Gestão':'Gestão','Manutenção Predial escolar':'Manutenção Predial Escolar','Matriz9BOX':'Matriz 9BOX','Método VEER':'Método VEER','Metodo5pontos':'Método 5 Pontos','Posicionamento':'Posicionamento'};
+import {config} from './shared.js';
+const te=new TextEncoder();
+const b64=a=>btoa(String.fromCharCode(...a)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+async function access(env){
+ let account;try{account=JSON.parse(env.GOOGLE_SERVICE_ACCOUNT_JSON)}catch{throw Error('account config')}
+ if(account.type!=='service_account'||typeof account.client_email!=='string'||typeof account.private_key!=='string')throw Error('account config');
+ const pem=account.private_key.replace(/-----BEGIN PRIVATE KEY-----|-----END PRIVATE KEY-----|\s/g,'');
+ const bytes=Uint8Array.from(atob(pem),c=>c.charCodeAt(0));
+ const signingKey=await crypto.subtle.importKey('pkcs8',bytes,{name:'RSASSA-PKCS1-v1_5',hash:'SHA-256'},false,['sign']);
+ const now=Math.floor(Date.now()/1000);
+ const head=b64(te.encode(JSON.stringify({alg:'RS256',typ:'JWT'})));
+ const payload=b64(te.encode(JSON.stringify({iss:account.client_email,scope:'https://www.googleapis.com/auth/drive.readonly',aud:'https://oauth2.googleapis.com/token',iat:now,exp:now+3600})));
+ const input=head+'.'+payload, signature=await crypto.subtle.sign('RSASSA-PKCS1-v1_5',signingKey,te.encode(input));
+ const res=await fetch('https://oauth2.googleapis.com/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({grant_type:'urn:ietf:params:oauth:grant-type:jwt-bearer',assertion:input+'.'+b64(new Uint8Array(signature))})});
+ if(!res.ok)throw Error('google auth');let data=await res.json();if(!data.access_token)throw Error('google auth');return data.access_token;
+}
+export async function syncDrive(env){const conf=config(env);if(!conf)throw Error('config');let token=await access(env);const rootId=conf.spinRootFolderId;const headers={Authorization:'Bearer '+token};let rootResp=await fetch('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(rootId)+'?fields=id,name,mimeType,trashed&supportsAllDrives=true',{headers});if(!rootResp.ok)throw Error('root');let root=await rootResp.json();if(root.trashed||root.mimeType!==FOLDER)throw Error('root');let top={id:root.id,name:root.name,videos:[],folders:[]},queue=[top],seen=new Set();while(queue.length){let folder=queue.shift();if(seen.has(folder.id)||seen.size>=2000)throw Error('folders limit');seen.add(folder.id);let page=null;do{let params=new URLSearchParams({q:`'${folder.id}' in parents and trashed = false`,pageSize:'1000',fields:'nextPageToken,incompleteSearch,files(id,name,mimeType,description,thumbnailLink,modifiedTime,videoMediaMetadata(durationMillis))',orderBy:'name_natural',supportsAllDrives:'true',includeItemsFromAllDrives:'true'});if(page)params.set('pageToken',page);let res=await fetch('https://www.googleapis.com/drive/v3/files?'+params,{headers});if(!res.ok)throw Error('list');let json=await res.json();if(json.incompleteSearch)throw Error('incomplete');for(let f of json.files||[]){if(!/^[\w-]+$/.test(f.id))throw Error('invalid id');if(f.mimeType===FOLDER){let node={id:f.id,name:f.name,videos:[],folders:[]};folder.folders.push(node);queue.push(node)}else if(f.mimeType?.startsWith('video/'))folder.videos.push({id:f.id,name:f.name,description:f.description||null,thumbnail:f.thumbnailLink||null,modifiedTime:f.modifiedTime||null,duration:f.videoMediaMetadata?.durationMillis||null})}page=json.nextPageToken||null}while(page)}return {source:root.name,rootFolderId:root.id,categories:[...top.folders.map(f=>({...f,driveName:f.name,name:labels[f.name]||f.name})),...(top.videos.length?[{id:top.id,name:top.name,driveName:top.name,videos:top.videos,folders:[]}]:[])]};}
+export async function getCatalog(env){return {catalog:await syncDrive(env),updatedAt:Date.now(),stale:false,cached:false}}
