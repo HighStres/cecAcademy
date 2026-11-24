@@ -1,0 +1,2 @@
+import {result,sessionValid,sameOrigin} from '../../lib/shared.js';import {getCatalog} from '../../lib/drive.js';
+export async function onRequestPost({request,env}){if(!sameOrigin(request))return result({error:'Origem não permitida.'},403);if(!await sessionValid(request,env))return result({error:'Sessão expirada. Entre novamente.'},401);try{return result(await getCatalog(env))}catch{return result({error:'Não foi possível atualizar a biblioteca.'},503)}}
