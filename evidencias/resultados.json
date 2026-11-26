@@ -1,0 +1,98 @@
+[
+  {
+    "w": 320,
+    "h": 568,
+    "homeOverflow": 0,
+    "videoOverflow": 0,
+    "aspect": 1.78,
+    "iframeCount": 1,
+    "completionKeptPlayer": true,
+    "nextChanged": true,
+    "theme": "dark",
+    "errors": []
+  },
+  {
+    "w": 360,
+    "h": 640,
+    "homeOverflow": 0,
+    "videoOverflow": 0,
+    "aspect": 1.78,
+    "iframeCount": 1,
+    "completionKeptPlayer": true,
+    "nextChanged": true,
+    "theme": "dark",
+    "errors": []
+  },
+  {
+    "w": 375,
+    "h": 812,
+    "homeOverflow": 0,
+    "videoOverflow": 0,
+    "aspect": 1.78,
+    "iframeCount": 1,
+    "completionKeptPlayer": true,
+    "nextChanged": true,
+    "theme": "dark",
+    "errors": []
+  },
+  {
+    "w": 390,
+    "h": 844,
+    "homeOverflow": 0,
+    "videoOverflow": 0,
+    "aspect": 1.78,
+    "iframeCount": 1,
+    "completionKeptPlayer": true,
+    "nextChanged": true,
+    "theme": "dark",
+    "errors": []
+  },
+  {
+    "w": 768,
+    "h": 1024,
+    "homeOverflow": 0,
+    "videoOverflow": 0,
+    "aspect": 1.78,
+    "iframeCount": 1,
+    "completionKeptPlayer": true,
+    "nextChanged": true,
+    "theme": "dark",
+    "errors": []
+  },
+  {
+    "w": 1024,
+    "h": 768,
+    "homeOverflow": 0,
+    "videoOverflow": 0,
+    "aspect": 1.78,
+    "iframeCount": 1,
+    "completionKeptPlayer": true,
+    "nextChanged": true,
+    "theme": "dark",
+    "errors": []
+  },
+  {
+    "w": 1366,
+    "h": 768,
+    "homeOverflow": 0,
+    "videoOverflow": 0,
+    "aspect": 1.78,
+    "iframeCount": 1,
+    "completionKeptPlayer": true,
+    "nextChanged": true,
+    "theme": "dark",
+    "errors": []
+  },
+  {
+    "w": 1920,
+    "h": 1080,
+    "homeOverflow": 0,
+    "videoOverflow": 0,
+    "aspect": 1.78,
+    "iframeCount": 1,
+    "completionKeptPlayer": true,
+    "nextChanged": true,
+    "theme": "dark",
+    "errors": []
+  }
+]

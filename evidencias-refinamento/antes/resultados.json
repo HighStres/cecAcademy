@@ -1,0 +1,223 @@
+[
+  {
+    "w": 320,
+    "h": 568,
+    "iframeRatio": 1.7777777777777777,
+    "overflow": 0,
+    "errors": [],
+    "responses": [],
+    "failed": [],
+    "frames": [
+      {
+        "url": "http://127.0.0.1:4181/",
+        "title": ""
+      },
+      {
+        "url": "https://drive.google.com/file/d/10bWKCN-flSi3ffrR1ysVJ6kRnKu2Uyr9/preview",
+        "title": ""
+      },
+      {
+        "url": "about:blank",
+        "title": ""
+      },
+      {
+        "url": "https://youtube.googleapis.com/embed/",
+        "title": ""
+      }
+    ]
+  },
+  {
+    "w": 360,
+    "h": 800,
+    "iframeRatio": 1.7777777777777777,
+    "overflow": 0,
+    "errors": [],
+    "responses": [],
+    "failed": [],
+    "frames": [
+      {
+        "url": "http://127.0.0.1:4181/",
+        "title": ""
+      },
+      {
+        "url": "https://drive.google.com/file/d/10bWKCN-flSi3ffrR1ysVJ6kRnKu2Uyr9/preview",
+        "title": ""
+      },
+      {
+        "url": "about:blank",
+        "title": ""
+      },
+      {
+        "url": "https://youtube.googleapis.com/embed/",
+        "title": ""
+      }
+    ]
+  },
+  {
+    "w": 390,
+    "h": 844,
+    "iframeRatio": 1.7777777777777777,
+    "overflow": 0,
+    "errors": [],
+    "responses": [],
+    "failed": [],
+    "frames": [
+      {
+        "url": "http://127.0.0.1:4181/",
+        "title": ""
+      },
+      {
+        "url": "https://drive.google.com/file/d/10bWKCN-flSi3ffrR1ysVJ6kRnKu2Uyr9/preview",
+        "title": ""
+      },
+      {
+        "url": "about:blank",
+        "title": ""
+      },
+      {
+        "url": "https://youtube.googleapis.com/embed/",
+        "title": ""
+      }
+    ]
+  },
+  {
+    "w": 430,
+    "h": 932,
+    "iframeRatio": 1.7777777777777777,
+    "overflow": 0,
+    "errors": [],
+    "responses": [],
+    "failed": [],
+    "frames": [
+      {
+        "url": "http://127.0.0.1:4181/",
+        "title": ""
+      },
+      {
+        "url": "https://drive.google.com/file/d/10bWKCN-flSi3ffrR1ysVJ6kRnKu2Uyr9/preview",
+        "title": ""
+      },
+      {
+        "url": "about:blank",
+        "title": ""
+      },
+      {
+        "url": "https://youtube.googleapis.com/embed/",
+        "title": ""
+      }
+    ]
+  },
+  {
+    "w": 768,
+    "h": 1024,
+    "iframeRatio": 1.7778512396694215,
+    "overflow": 0,
+    "errors": [],
+    "responses": [],
+    "failed": [],
+    "frames": [
+      {
+        "url": "http://127.0.0.1:4181/",
+        "title": ""
+      },
+      {
+        "url": "https://drive.google.com/file/d/10bWKCN-flSi3ffrR1ysVJ6kRnKu2Uyr9/preview",
+        "title": ""
+      },
+      {
+        "url": "about:blank",
+        "title": ""
+      },
+      {
+        "url": "https://youtube.googleapis.com/embed/",
+        "title": ""
+      }
+    ]
+  },
+  {
+    "w": 1366,
+    "h": 768,
+    "iframeRatio": 1.7777777777777777,
+    "overflow": 0,
+    "errors": [],
+    "responses": [],
+    "failed": [
+      {
+        "host": "csp.withgoogle.com",
+        "error": "net::ERR_BLOCKED_BY_ORB"
+      }
+    ],
+    "frames": [
+      {
+        "url": "http://127.0.0.1:4181/",
+        "title": ""
+      },
+      {
+        "url": "https://drive.google.com/file/d/10bWKCN-flSi3ffrR1ysVJ6kRnKu2Uyr9/preview",
+        "title": ""
+      },
+      {
+        "url": "about:blank",
+        "title": ""
+      },
+      {
+        "url": "https://youtube.googleapis.com/embed/",
+        "title": ""
+      }
+    ]
+  },
+  {
+    "w": 1440,
+    "h": 900,
+    "iframeRatio": 1.7778183544534931,
+    "overflow": 0,
+    "errors": [],
+    "responses": [],
+    "failed": [],
+    "frames": [
+      {
+        "url": "http://127.0.0.1:4181/",
+        "title": ""
+      },
+      {
+        "url": "https://drive.google.com/file/d/10bWKCN-flSi3ffrR1ysVJ6kRnKu2Uyr9/preview",
+        "title": ""
+      },
+      {
+        "url": "about:blank",
+        "title": ""
+      },
+      {
+        "url": "https://youtube.googleapis.com/embed/",
+        "title": ""
+      }
+    ]
+  },
+  {
+    "w": 1920,
+    "h": 1080,
+    "iframeRatio": 1.7777837837837838,
+    "overflow": 0,
+    "errors": [],
+    "responses": [],
+    "failed": [],
+    "frames": [
+      {
+        "url": "http://127.0.0.1:4181/",
+        "title": ""
+      },
+      {
+        "url": "https://drive.google.com/file/d/10bWKCN-flSi3ffrR1ysVJ6kRnKu2Uyr9/preview",
+        "title": ""
+      },
+      {
+        "url": "about:blank",
+        "title": ""
+      },
+      {
+        "url": "https://youtube.googleapis.com/embed/",
+        "title": ""
+      }
+    ]
+  }
+]
