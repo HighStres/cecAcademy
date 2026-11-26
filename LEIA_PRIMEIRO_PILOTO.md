@@ -1,22 +1,30 @@
-# Player mobile — publicar primeiro em PRÉVIA
+# Player próprio + Google Drive como armazenamento — publicar primeiro em PRÉVIA
 
-Esta versão **não muda nada para quem não ativar o teste**: desktop e celular continuam com o player do Google Drive (iframe), exatamente como na versão aprovada. O novo player HTML5 só aparece em telas de até 950 px **depois** de abrir o site uma vez com `?player=teste`. O relatório completo está em [RELATORIO_PLAYER_MOBILE.md](RELATORIO_PLAYER_MOBILE.md).
+Nesta versão o **player HTML5 do cecAcademy é o único player das aulas**, no celular e no desktop. O Google Drive serve apenas como armazenamento: o navegador recebe o vídeo por `GET /api/media?id=…` (Pages Function), que autentica a Service Account, confere se o vídeo pertence à pasta raiz e repassa o conteúdo com `Range`/`206`. Não há iframe `/preview`, link "abrir no Drive" nem fallback para o player do Google.
 
-## Como ativar e desativar no aparelho
-- Ativar: abra `https://SEU-PREVIEW/?player=teste`. O celular passa a lembrar a escolha (não precisa repetir o parâmetro nas próximas visitas).
-- Desativar: abra `https://SEU-PREVIEW/?player=drive`.
-- Em qualquer aula, o botão **Usar player do Google Drive** (menu de velocidade ou tela de erro) volta ao iframe só para aquela aula.
+## Pré-requisitos (já existentes, nada novo)
+- Secrets `CECA_CONFIG` e `GOOGLE_SERVICE_ACCOUNT_JSON` no projeto Pages, **em Production e em Preview** (são separados).
+- A pasta raiz (Ispin) compartilhada com o e-mail da Service Account como **Leitor**. **Sem isso nenhum vídeo toca**: o player mostra "Vídeo não encontrado ou não compartilhado com a conta de serviço".
 
 ## Publicar em prévia (sem expor Secrets)
-1. Crie uma branch nova no GitHub (ex.: `player-mobile`), **não** `main`, e envie estes arquivos. Na raiz devem ficar `public`, `functions`, `lib`. Não envie `.dev.vars`, JSON de conta de serviço nem a pasta `.wrangler`.
-2. No Cloudflare: **Workers & Pages → projeto → Settings → Variables and Secrets**. Confira que `CECA_CONFIG` e `GOOGLE_SERVICE_ACCOUNT_JSON` existem também no ambiente **Preview** (eles são separados da Production). Se faltarem, adicione-os ali, como **Secret**, colando os valores direto no painel. Nunca no GitHub nem em chat.
-3. Aguarde o deploy da branch em **Deployments** e copie a URL de prévia daquele deploy (algo como `https://player-mobile.SEU-PROJETO.pages.dev`).
-4. Restrinja quem acessa a prévia (Cloudflare Access em `*.SEU-PROJETO.pages.dev` ou, no mínimo, não divulgar a URL).
-5. No celular, abra a URL de prévia com `?player=teste`, entre e siga o roteiro de teste do relatório (seção "Roteiro de teste em aparelho").
-6. Só depois de aprovar em aparelhos reais, faça o merge em `main`. Mesmo em produção o player novo continua desligado por padrão até cada pessoa abrir `?player=teste`.
+1. Envie o projeto para uma branch nova no GitHub (ex.: `player-proprio`), **não** `main`. Não envie `.dev.vars`, JSON de conta de serviço nem `.wrangler`.
+2. Cloudflare → Workers & Pages → projeto → **Settings → Variables and Secrets** → confira os dois Secrets no ambiente **Preview** (adicione-os ali como *Secret*, se faltarem).
+3. Em **Deployments**, abra o deploy da branch e copie a URL de prévia.
+4. Teste em celular e computador (roteiro no relatório). Restrinja o acesso à prévia (Cloudflare Access ou não divulgar a URL).
+5. Só depois de aprovado, faça o merge em `main` (Production).
 
-## Teste local (sem Google, sem Secrets)
-`node tools/servidor-local.mjs <pasta-com-mp4> [porta]` executa as Functions reais e simula só a API do Drive, servindo os MP4 da pasta com Range/206. Login local: usuário `teste-local`, senha `senha-local-teste` (apenas para esse servidor de teste). Abra `http://localhost:8788/?player=teste`.
+## Diagnóstico rápido na prévia (logado no site)
+Abra no navegador `URL-DA-PREVIA/api/media?id=<ID-de-um-vídeo>`:
+- vídeo começa a baixar/tocar → integração OK;
+- `{"code":"not_found"}` → pasta não compartilhada com a Service Account ou ID errado;
+- `{"code":"drive_auth"}` → Secret `GOOGLE_SERVICE_ACCOUNT_JSON` ausente/inválido nesse ambiente;
+- `{"code":"session"}` → faça login primeiro;
+- `{"code":"drive_quota"}` → limite do Google Drive; tente mais tarde.
+
+## Executar localmente
+- **Com o Drive real:** copie `.dev.vars.example` para `.dev.vars`, preencha só na sua máquina e rode `npx wrangler pages dev public --compatibility-date 2025-04-01`.
+- **Sem credenciais (Drive simulado):** `node tools/servidor-local.mjs <pasta-com-mp4> [porta]` e abra `http://localhost:8788/`. Login local: `teste-local` / `senha-local-teste` (vale só para esse servidor de teste).
+- Testes automáticos: `npm test`.
 
 ## Para desfazer
-Não faça merge da branch. Se já tiver feito, reverta o commit: o site volta ao player do Drive. Nada no Google Drive é alterado por esta versão.
+Não faça o merge da branch (ou reverta o commit). Nada no Google Drive é alterado por esta versão.

@@ -1,17 +1,9 @@
-// cecAcademy — player HTML5 para celular (somente telas até 950 px).
-// Ativação controlada: "?player=teste" liga (fica lembrado neste navegador), "?player=drive" desliga.
-// Sem ativação, a aula continua no player do Google Drive (iframe), como na versão aprovada.
+// cecAcademy — player HTML5 próprio. É o único player das aulas (celular e desktop).
+// O Google Drive é só armazenamento: o vídeo chega por /api/media (Pages Function), com Range/206.
 (()=>{
 'use strict';
-const MOBILE=matchMedia('(max-width: 950px)');
 const SPEEDS=[0.5,0.75,1,1.25,1.5,1.75,2];
-const param=new URLSearchParams(location.search).get('player');
-let pref=null;
-try{
- if(param==='teste'||param==='html5')localStorage.setItem('cec-player','html5');
- else if(param==='drive')localStorage.removeItem('cec-player');
- pref=localStorage.getItem('cec-player');
-}catch{pref=(param==='teste'||param==='html5')?'html5':null}
+try{localStorage.removeItem('cec-player')}catch{} // limpa a chave da fase de teste
 
 // iOS ignora alterações de volume por script: nesse caso mostramos apenas o botão de mudo.
 const volumeWritable=(()=>{try{const v=document.createElement('video');v.volume=.5;return Math.abs(v.volume-.5)<.01}catch{return false}})();
@@ -59,11 +51,10 @@ function markup(v,esc,title){
 <div class="hp-panel hp-menu" hidden role="dialog" aria-label="Velocidade de reprodução"><div class="hp-sheet">
  <div class="hp-sheet-head"><strong>Velocidade</strong><button type="button" class="hp-btn hp-small" data-hp="menu-close" aria-label="Fechar">✕</button></div>
  <div class="hp-speeds">${SPEEDS.map(s=>`<button type="button" data-hp="rate" data-rate="${s}" aria-pressed="${s===1}">${rateLabel(s)}</button>`).join('')}</div>
- <button type="button" class="hp-link" data-hp="drive">Usar player do Google Drive</button>
 </div></div>
 <div class="hp-panel hp-error" hidden role="alert"><div class="hp-sheet">
  <p class="hp-error-text"></p>
- <div class="hp-error-actions"><button type="button" data-hp="retry">↻ Tentar novamente</button><button type="button" data-hp="drive">Usar player do Google Drive</button></div>
+ <div class="hp-error-actions"><button type="button" data-hp="retry">↻ Tentar novamente</button></div>
 </div></div>
 </div>`;
 }
@@ -137,7 +128,7 @@ function mount(v,hooks={}){
    const r=await fetch(src,{headers:{Range:'bytes=0-1'},cache:'no-store',credentials:'same-origin'});
    if(r.ok){
     await r.body?.cancel();
-    msg=code===4||code===3?'O arquivo desta aula não pôde ser reproduzido neste navegador (formato incompatível ou arquivo inválido). Use o player do Google Drive.':'A conexão com o vídeo foi interrompida. Verifique a internet e tente novamente.';
+    msg=code===4||code===3?'O arquivo desta aula não pôde ser reproduzido neste navegador (formato incompatível ou arquivo inválido). Avise o administrador.':'A conexão com o vídeo foi interrompida. Verifique a internet e tente novamente.';
    }else{
     const j=await r.json().catch(()=>({}));
     msg=j.error||('O servidor respondeu com erro '+r.status+'.');
@@ -180,7 +171,6 @@ function mount(v,hooks={}){
   else if(a==='rate'){setRate(Number(b.dataset.rate));openMenu(false)}
   else if(a==='cinema'){hooks.toggleCinema?.();setTimeout(paint,50);show()}
   else if(a==='retry'){if(b.dataset.relogin)location.reload();else retry()}
-  else if(a==='drive'){const fn=hooks.useDrive;stop();fn?.()}
  });
  on(q('.hp-tap'),'click',e=>{
   const now=Date.now(),r=root.getBoundingClientRect(),x=(e.clientX-r.left)/r.width;
@@ -220,7 +210,7 @@ function mount(v,hooks={}){
 function stop(){if(!active)return;const a=active;active=null;a.stop()}
 
 window.CecPlayer={
- enabled:()=>pref==='html5'&&MOBILE.matches,
+ enabled:()=>true,
  markup,mount,stop,
  active:()=>!!active,
  retry:()=>active?.retry(),

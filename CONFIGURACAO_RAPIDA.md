@@ -26,7 +26,7 @@ Gere `sessionSecret` com um gerenciador de senhas confiável: pelo menos **43 ca
 Em **Deployments**, execute um novo deploy após salvar os Secrets. Use HTTPS. Para Preview, configure os Secrets separadamente somente se necessário, e restrinja o acesso a previews e ao domínio `pages.dev`.
 
 ## 5 · Utilizar
-Abra o endereço publicado, entre com o usuário e senha definidos no Secret e selecione uma aula. **Atualizar biblioteca** consulta novamente o Drive, sem publicar o site. Cada profissional precisa estar conectado a uma conta Google com permissão de leitura para assistir aos vídeos privados; a conta de serviço não dá essa permissão a ele. Se o vídeo não abrir, use **abra no Drive**. Nenhuma permissão é alterada automaticamente.
+Abra o endereço publicado, entre com o usuário e senha definidos no Secret e selecione uma aula. **Atualizar biblioteca** consulta novamente o Drive, sem publicar o site. Os vídeos tocam no player próprio do cecAcademy, entregues pelo endpoint `/api/media` com a conta de serviço; não é preciso conta Google individual. Se o vídeo não abrir, use **Recarregar vídeo** e confira se a pasta continua compartilhada com a conta de serviço. Nenhuma permissão é alterada automaticamente.
 
 **Alterar senha:** edite o JSON inteiro de `CECA_CONFIG` em Variables and Secrets, altere `password`, salve e faça novo deploy. Para invalidar todas as sessões já emitidas, substitua também `sessionSecret` por uma nova chave aleatória e publique novamente.
 

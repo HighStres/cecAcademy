@@ -10,7 +10,7 @@
 }
 @media(max-width:350px){.topbar{padding:0 7px}.topbar>.wordmark{font-size:18px}.topbar>.mobile-menu,.search-toggle,.theme{width:40px;min-width:40px}.top-actions{margin-left:auto}#logout{min-width:34px}.main-inner{padding-left:16px;padding-right:16px}}
 
-/* Cinema móvel: o iframe continua sendo o único player ativo. */
+/* Modo cinema (barra superior e botões móveis). */
 .mobile-player-actions,.cinema-toolbar,.cinema-hint{display:none}
 @media(max-width:950px){.mobile-player-actions{display:flex;gap:8px;margin-top:10px}.mobile-player-actions button{min-height:44px;flex:1;font-size:10px}}
  html.cinema-active .player-layout{animation:none;transform:none}
@@ -22,7 +22,7 @@
  .player-wrap.cinema-on .cinema-hint{display:block;flex:none;text-align:center;color:#c9d7e8;font-size:10px;margin:5px 0 9px}
  .player-wrap.cinema-on .player-loading{top:48px;bottom:26px;pointer-events:none}
 @media(orientation:landscape){.player-wrap.cinema-on{--cinema-reserve:48px}.player-wrap.cinema-on .cinema-hint{display:none}}
-/* Player HTML5 móvel (assets/player.js): só existe em telas até 950 px com ?player=teste. Desktop não é afetado. */
+/* Player HTML5 próprio (assets/player.js): único player das aulas, no celular e no desktop. */
 .hp{position:absolute;inset:0;background:#050a12;color:#fff;overflow:hidden;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;font-family:inherit;--hp-accent:#81b5f6}
 .hp-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#050a12;display:block}
 .hp-tap{position:absolute;inset:0;z-index:1}

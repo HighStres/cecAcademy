@@ -1,5 +1,27 @@
-# Relatório — player mobile do cecAcademy
+# Relatório — player do cecAcademy
 
+## Versão 2 (26/11/2026): player próprio como único player
+**Problema:** o fluxo normal ainda usava o player do Google Drive. O iframe `drive.google.com/file/d/<id>/preview` era o padrão no desktop e no celular; o player próprio só aparecia em telas ≤ 950 px com `?player=teste`. Também havia o botão "Usar player do Google Drive" e o link "abra no Drive". Por isso, na publicação, quem não ativava o teste continuava vendo o player do Google.
+
+**Correção:** `public/assets/player.js` (sem mudança de controles ou visual) agora é o único player, no celular e no desktop. Foram removidos do `app.js`/`player.js`: o iframe `/preview`, o link externo, os botões de fallback para o Drive e a ativação por parâmetro. O "Recarregar vídeo" agora só recarrega o player próprio. O backend (`/api/media`, Range/206, sessão, validação da raiz) não mudou nesta versão.
+
+**Testes desta versão** (servidor local com as Functions reais, API do Google simulada servindo o MP4 real da aula "MÉTODO VEER - Conclusões"; Chrome headless):
+| Teste | Resultado |
+|---|---|
+| `npm test` (13) e build das Functions pelo wrangler | APROVADO |
+| Desktop 1366×768: só `<video>` próprio (0 iframes, 0 requisições a drive.google.com); play, pausa, ±15 s, arrastar barra (→1:34), velocidade 1,75x, mudo, volume 0,5 | APROVADO (simulado) |
+| Desktop: modo cinema em tela cheia (1366×768) e saída mantendo posição e reprodução | APROVADO (simulado) |
+| Celular 390×844 (toque): só player próprio, sem botões/links do Drive; play, +15 s, cinema, saída, recarregar mantendo posição | APROVADO (simulado) |
+| Navegação entre aulas (botão "Aula anterior") | APROVADO (simulado) |
+| Vídeo real do Google Drive pela Service Account real | **NÃO TESTADO**: não há credencial da Service Account neste ambiente |
+| Cloudflare Preview | **NÃO TESTADO**: Cloudflare não autenticado aqui (`wrangler whoami`: not authenticated) |
+| iPhone/Android físicos | **NÃO TESTADO** |
+
+Testes simulados **não comprovam** o funcionamento publicado. A validação no Preview segue o roteiro de [LEIA_PRIMEIRO_PILOTO.md](LEIA_PRIMEIRO_PILOTO.md) e a seção 5 abaixo.
+
+---
+
+## Versão 1 (histórico)
 Data: 26/11/2026. Escopo: player de vídeo no celular e modo cinema. O desktop não foi alterado.
 
 ## 1. Diagnóstico
