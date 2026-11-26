@@ -1,0 +1,36 @@
+{
+  "errors": [],
+  "play": {
+    "t": 0,
+    "paused": true,
+    "duration": null,
+    "rate": 1
+  },
+  "tap": {
+    "t": 0.43625,
+    "paused": false,
+    "duration": 871.3984580498866,
+    "rate": 1
+  },
+  "horizontal": {
+    "x": 118,
+    "y": 48,
+    "width": 608,
+    "height": 342
+  },
+  "exit": {
+    "t": 2.314286,
+    "paused": false,
+    "duration": 871.3984580498866,
+    "rate": 1
+  },
+  "reenter": {
+    "t": 2.947356,
+    "paused": false,
+    "duration": 871.3984580498866,
+    "rate": 1
+  },
+  "retryFrameCount": 1,
+  "nextFrameCount": 1,
+  "nextSrc": "https://drive.google.com/file/d/proxima/preview"
+}

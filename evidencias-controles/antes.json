@@ -1,0 +1,61 @@
+{
+  "initial": {
+    "t": 3.900044,
+    "paused": false,
+    "duration": 871.3984580498866,
+    "rate": 1,
+    "ready": 4,
+    "width": 640
+  },
+  "errors": [],
+  "buttons": [
+    {
+      "aria": "Play keyboard shortcut k",
+      "visible": false
+    },
+    {
+      "aria": "Play keyboard shortcut k",
+      "visible": true
+    },
+    {
+      "aria": "Pause keyboard shortcut k",
+      "visible": true
+    },
+    {
+      "aria": "Rewind 10 seconds (j)",
+      "visible": false
+    },
+    {
+      "aria": "Fast forward 10 seconds (l)",
+      "visible": false
+    },
+    {
+      "aria": "Mute (m)",
+      "visible": true
+    },
+    {
+      "aria": "Subtitles/Closed captions (c)",
+      "visible": false
+    },
+    {
+      "aria": "1x",
+      "visible": false
+    },
+    {
+      "aria": "Settings",
+      "visible": true
+    },
+    {
+      "aria": "Full screen (f)",
+      "visible": true
+    }
+  ],
+  "sliders": [
+    {
+      "label": "Volume",
+      "min": null,
+      "max": null,
+      "now": null
+    }
+  ]
+}
